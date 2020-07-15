@@ -2,16 +2,8 @@ import React from "react";
 import BusstopItem from "./BusstopItem.js";
 import Donation from "./Donation.js";
 export default class BusstopPanel extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      donatelist: new Donation(),
-    };
-  }
   refreshDonations(bstopid) {
-    this.setState({
-      donatelist: this.state.donatelist.refreshDonations(bstopid),
-    });
+    this.props.refreshDonations(bstopid);
   }
 
   render() {

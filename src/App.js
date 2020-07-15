@@ -13,8 +13,8 @@ export default class App extends React.Component {
     super();
     this.state = {
       busstop: new Busstop(),
-      donatelist: new Donation(),
-      busstopid: 0,
+      displayBStopId: 0,
+      bsDonationList: new Donation(),
     };
   }
 
@@ -24,16 +24,16 @@ export default class App extends React.Component {
     });
   }
 
-  searchBusstop(word) {
+  refreshDonationList(bsid) {
     this.setState({
-      busstop: this.state.busstop.searchBusstop(word),
+      bsDonationList: this.state.bsDonationList.refreshDonations(bsid),
+      displayBStopId: bsid,
     });
   }
 
-  refreshDonations(bid) {
+  searchBusstop(word) {
     this.setState({
-      busstopid: bid,
-      donatelist: this.state.donatelist.refreshDonations(bid),
+      busstop: this.state.busstop.searchBusstop(word),
     });
   }
 
@@ -43,45 +43,15 @@ export default class App extends React.Component {
         <BusstopHeader searchBusstop={this.searchBusstop.bind(this)} />
         <BusstopPanel
           items={this.state.busstop.busstops}
-          refreshDonations={this.refreshDonations.bind(this)}
+          refreshDonations={this.refreshDonationList.bind(this)}
         />
 
         <DonateDetail
-          items={this.state.donatelist.donations}
-          //refreshDonations={this.refreshDonations.bind(this)}
+          items={this.state.bsDonationList.donations}
+          currentBSid={this.state.displayBStopId}
         />
-        <DonateForm />
+        <DonateForm currentBSid={this.state.displayBStopId} />
       </div>
     );
   }
 }
-
-var rawData = [
-  {
-    info: {
-      descrip: "我是一匹来自远方的狼。",
-      sex: "男",
-      age: 20,
-      name: "张三",
-      id: "主任",
-    },
-  },
-  {
-    info: {
-      descrip: "我是一匹来自远方的狼。",
-      sex: "女",
-      age: 21,
-      name: "赵静",
-      id: "学生",
-    },
-  },
-  {
-    info: {
-      descrip: "我是一匹来自远方的狼。",
-      sex: "女",
-      age: 22,
-      name: "王二麻",
-      id: "学生",
-    },
-  },
-];

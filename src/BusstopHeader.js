@@ -10,8 +10,8 @@ export default class BusstopHeader extends React.Component {
   render() {
     return (
       <div>
-        <h3 style={{ "text-align": "center" }}>Donation System</h3>
-        <table className="optHeader">
+        <h3 style={{ textAlign: "center" }}>Donation System</h3>
+        <table className="optHeader" style={{ textAlign: "center" }}>
           <tbody>
             <tr>
               <td className="headerTd">
@@ -21,25 +21,6 @@ export default class BusstopHeader extends React.Component {
                   type="text"
                   placeholder="Search..."
                 />
-              </td>
-              <td className="headerTd">
-                <label for="idSelect">Area Filter</label>
-                <select>
-                  <option value="0">All</option>
-                  <option value="1">East</option>
-                  <option value="2">West</option>
-                  <option value="3">North</option>
-                  <option value="4">South</option>
-                  <option value="5">Center</option>
-                </select>
-              </td>
-              <td>
-                <label for="orderSelect">Order by</label>
-                <select id="orderSelect">
-                  <option value="0">Id</option>
-                  <option value="1">Name</option>
-                  <option value="2">Name desc</option>
-                </select>
               </td>
             </tr>
           </tbody>

@@ -1,12 +1,19 @@
 import React from "react";
 import DonationItem from "./DonationItem.js";
+import Donation from "./Donation.js";
 export default class DonateDetail extends React.Component {
   render() {
     let itemslist = [];
-    var data = this.props.items;
-    var list = [];
-    for (var i in data) list.push([data[i]]);
-    if (this.props.items.length == 0) {
+
+    if (this.props.currentBSid == 0) {
+      itemslist.push(
+        <tr>
+          <th colSpan="5" className="tempEmpty">
+            Please select a bus stop to display the detail.
+          </th>
+        </tr>
+      );
+    } else if (this.props.items.length == 0) {
       itemslist.push(
         <tr>
           <th colSpan="5" className="tempEmpty">
@@ -26,7 +33,7 @@ export default class DonateDetail extends React.Component {
         <hr />
         <h6>
           Total amount raised by now:
-          {list.reduce((total, obj) => obj.donateamount + total, 0)}
+          {this.props.items.reduce((total, obj) => obj.donateamount + total, 0)}
         </h6>
         <table className="itemPanel">
           <thead>

@@ -20,7 +20,7 @@ export default class Donation {
       new donationItem(Donation.rawData[4]),
     ];
 
-    this.donations = this.allDonations;
+    this.donations = [];
     this.bstopid = "";
   }
 
