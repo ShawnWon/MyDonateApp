@@ -4,7 +4,7 @@ class donationItem {
     this.info.busstopid = item.busstopid;
     this.info.donatername = item.donatername;
     this.info.donateamount = item.donateamount;
-    this.info.donateremail = item.donateremail || "";
+    this.info.donateremail = item.donateremail || "Anonymous";
     this.key = ++donationItem.key;
   }
 }

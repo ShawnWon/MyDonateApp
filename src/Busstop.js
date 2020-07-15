@@ -21,7 +21,7 @@ export default class Busstop {
       new busstopItem(Busstop.rawData[5]),
     ];
 
-    this.busstops = this.allBusstop;
+    this.busstops = [];
     this.word = "";
     this.area = "";
   }
@@ -29,13 +29,16 @@ export default class Busstop {
   searchBusstop(word) {
     this.word = word;
     this.busstops = this.allBusstop;
-    //在staff中搜索
+
     this.busstops = this.busstops.filter((item) => {
       return (
         item.info.busstopname.indexOf(word) != -1 ||
         item.info.area.indexOf(word) != -1
       );
     });
+    if (word == "") {
+      this.busstops = [];
+    }
     return this;
   }
 }

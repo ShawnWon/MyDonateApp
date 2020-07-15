@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import BusstopItem from "./BusstopItem.js";
 import Donation from "./Donation.js";
 export default class BusstopPanel extends React.Component {
@@ -12,7 +13,7 @@ export default class BusstopPanel extends React.Component {
     if (this.props.items.length == 0) {
       itemslist.push(
         <tr>
-          <th colSpan="5" className="tempEmpty">
+          <th colSpan="3" className="tempEmpty">
             No busstop available.
           </th>
         </tr>
@@ -30,14 +31,28 @@ export default class BusstopPanel extends React.Component {
     }
 
     return (
-      <table className="itemPanel">
-        <thead>
-          <th className="itemTd">Id</th>
-          <th className="itemTd">Busstop Name</th>
-          <th className="itemTd">Area</th>
-        </thead>
-        <tbody>{itemslist}</tbody>
-      </table>
+      <div class="w3-container">
+        <table class="w3-table w3-striped">
+          <thead>
+            <th>
+              <div class="w3-card w3-green">
+                <h6>Bus stop Id</h6>
+              </div>
+            </th>
+            <th>
+              <div class="w3-card w3-light-green">
+                <h6>Busstop Name</h6>
+              </div>
+            </th>
+            <th>
+              <div class="w3-card w3-lime">
+                <h6>Area</h6>
+              </div>
+            </th>
+          </thead>
+          <tbody>{itemslist}</tbody>
+        </table>
+      </div>
     );
   }
 }

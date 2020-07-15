@@ -10,21 +10,15 @@ export default class BusstopHeader extends React.Component {
   render() {
     return (
       <div>
-        <h3 style={{ textAlign: "center" }}>Donation System</h3>
-        <table className="optHeader" style={{ textAlign: "center" }}>
-          <tbody>
-            <tr>
-              <td className="headerTd">
-                <input
-                  ref="searchBar"
-                  onChange={this.handlerSearch.bind(this)}
-                  type="text"
-                  placeholder="Search..."
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 style={{ textAlign: "center" }}>Donation System</h2>
+
+        <input
+          ref="searchBar"
+          onChange={this.handlerSearch.bind(this)}
+          type="text"
+          placeholder="Search a bus stop..."
+          class="w3-input"
+        />
       </div>
     );
   }

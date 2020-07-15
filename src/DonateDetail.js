@@ -1,41 +1,65 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import DonationItem from "./DonationItem.js";
 import Donation from "./Donation.js";
+import "w3-css/w3.css";
 export default class DonateDetail extends React.Component {
   render() {
+    var target = 700;
+    var subtotal = 0;
+    var gap = target - subtotal;
     let itemslist = [];
+    let detailview = ReactDOM.findDOMNode(this.refs.donateDetailView);
 
-    if (this.props.currentBSid == 0) {
+    if (this.props.currentBSid != 0) {
+      detailview.style.display = "block";
+    }
+
+    if (this.props.items.length == 0) {
+      target = 700;
+      subtotal = 0;
+      gap = target - subtotal;
       itemslist.push(
         <tr>
-          <th colSpan="5" className="tempEmpty">
-            Please select a bus stop to display the detail.
-          </th>
-        </tr>
-      );
-    } else if (this.props.items.length == 0) {
-      itemslist.push(
-        <tr>
-          <th colSpan="5" className="tempEmpty">
-            No donation available.
+          <th colSpan="3" className="tempEmpty">
+            No donation found.
           </th>
         </tr>
       );
     } else {
+      target = 700;
+      subtotal = this.props.items.reduce(
+        (total, obj) => obj.info.donateamount + total,
+        0
+      );
+      if (subtotal < target) gap = target - subtotal;
+      else gap = "This stop has met the target.";
       this.props.items.forEach((item) => {
         itemslist.push(<DonationItem key={item.key} item={item} />);
       });
     }
 
     return (
-      <div>
-        <h4 style={{ "text-align": "center" }}>Busstop Donation</h4>
+      <div ref="donateDetailView" className="overLay">
+        <h3 style={{ "text-align": "center" }}>Busstop Status</h3>
         <hr />
-        <h6>
-          Total amount raised by now:
-          {this.props.items.reduce((total, obj) => obj.donateamount + total, 0)}
-        </h6>
-        <table className="itemPanel">
+        <div class="w3-third">
+          <div class="w3-card w3-green">
+            <h6>The target amount to meet: $ {target}</h6>
+          </div>
+        </div>
+        <div class="w3-third">
+          <div class="w3-card w3-light-green">
+            <h6>Total amount raised by now:$ {subtotal}</h6>
+          </div>
+        </div>
+        <div class="w3-third">
+          <div class="w3-card w3-lime">
+            <h6>Gap left to meet the target: $ {gap}</h6>
+          </div>
+        </div>
+
+        <table class="w3-table w3-striped">
           <thead>
             <th className="itemTd">Donater Name</th>
             <th className="itemTd">Donater Email</th>

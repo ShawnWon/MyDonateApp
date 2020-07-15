@@ -5,6 +5,7 @@ import BusstopPanel from "./BusstopPanel";
 import DonateForm from "./DonateForm.js";
 import DonateDetail from "./DonateDetail.js";
 import "./App.css";
+
 import Busstop from "./Busstop.js";
 import Donation from "./Donation.js";
 
@@ -35,25 +36,34 @@ export default class App extends React.Component {
     this.setState({
       busstop: this.state.busstop.searchBusstop(word),
     });
+    if (word == "") {
+      this.setState({
+        displayBStopId: "0",
+      });
+    }
   }
 
   render() {
     return (
-      <div>
-        <BusstopHeader searchBusstop={this.searchBusstop.bind(this)} />
-        <BusstopPanel
-          items={this.state.busstop.busstops}
-          refreshDonations={this.refreshDonationList.bind(this)}
-        />
+      <div class="w3-display-topmiddle">
+        <div>
+          <BusstopHeader searchBusstop={this.searchBusstop.bind(this)} />
+          <BusstopPanel
+            items={this.state.busstop.busstops}
+            refreshDonations={this.refreshDonationList.bind(this)}
+            currentBSid={this.state.displayBStopId}
+            displayBSpanel={this.state.displayBSpanel}
+          />
 
-        <DonateDetail
-          items={this.state.bsDonationList.donations}
-          currentBSid={this.state.displayBStopId}
-        />
-        <DonateForm
-          currentBSid={this.state.displayBStopId}
-          addDonations={this.addDonationItem.bind(this)}
-        />
+          <DonateDetail
+            items={this.state.bsDonationList.donations}
+            currentBSid={this.state.displayBStopId}
+          />
+          <DonateForm
+            currentBSid={this.state.displayBStopId}
+            addDonations={this.addDonationItem.bind(this)}
+          />
+        </div>
       </div>
     );
   }
