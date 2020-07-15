@@ -27,7 +27,9 @@ export default class Donation {
   addDonationItem(item) {
     let newItem = new donationItem(item);
     this.allDonations.push(newItem);
-    this.donations = this.allDonations;
+    this.donations = this.allDonations.filter((it) => {
+      return it.info.busstopid == item.busstopid;
+    });
     return this;
   }
 

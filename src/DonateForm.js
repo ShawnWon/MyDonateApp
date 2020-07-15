@@ -1,19 +1,28 @@
 import React from "react";
+import ReactDOM from "react-dom";
 export default class DonateForm extends React.Component {
   handlerAddClick(evt) {
     evt.preventDefault();
     let item = {};
-    let addForm = React.findDOMNode(this.refs.addForm);
+    let addForm = ReactDOM.findDOMNode(this.refs.addForm);
+    item.busstopid = this.props.currentBSid;
+    item.donatername = addForm.querySelector("#donateAddName").value.trim();
+    item.donateamount = addForm.querySelector("#donateAddAmount").value.trim();
+    item.donateremail = addForm.querySelector("#donateAddEmail").value.trim();
 
-    item.name = addForm.querySelector("#donateAddName").value.trim();
-    item.amount = addForm.querySelector("#donateAddAmount").value.trim();
-    item.email = addForm.querySelector("#donateAddEmail").value.trim();
-
+    if (item.busstopid == "0") {
+      let tips = ReactDOM.findDOMNode(this.refs.tipsNoBS);
+      tips.style.display = "block";
+      setTimeout(function () {
+        tips.style.display = "none";
+      }, 1000);
+      return;
+    }
     /*
      *表单验证
      */
-    if (item.name == "" || item.age == "") {
-      let tips = React.findDOMNode(this.refs.tipsUnDone);
+    if (item.donatername == "" || item.age == "") {
+      let tips = ReactDOM.findDOMNode(this.refs.tipsUnDone);
       tips.style.display = "block";
       setTimeout(function () {
         tips.style.display = "none";
@@ -22,8 +31,8 @@ export default class DonateForm extends React.Component {
     }
     //非负整数
     let numReg = /^\d+$/;
-    if (!numReg.test(item.amount) || parseInt(item.age) > 1000) {
-      let tips = React.findDOMNode(this.refs.tipsUnAge);
+    if (!numReg.test(item.donateamount) || parseInt(item.age) > 1000) {
+      let tips = ReactDOM.findDOMNode(this.refs.tipsUnAge);
       tips.style.display = "block";
       setTimeout(function () {
         tips.style.display = "none";
@@ -31,11 +40,11 @@ export default class DonateForm extends React.Component {
       return;
     }
 
-    this.props.addDonateItem(item);
+    this.props.addDonations(item);
     addForm.reset();
 
     //此处应在返回添加成功信息后确认
-    let tips = React.findDOMNode(this.refs.tips);
+    let tips = ReactDOM.findDOMNode(this.refs.tips);
     tips.style.display = "block";
     setTimeout(function () {
       tips.style.display = "none";
@@ -65,7 +74,7 @@ export default class DonateForm extends React.Component {
             </label>
             <input
               ref="addAmount"
-              id="donateAddAmout"
+              id="donateAddAmount"
               type="text"
               placeholder="Input Your donate amount(0-1000)"
             />
@@ -73,9 +82,14 @@ export default class DonateForm extends React.Component {
 
           <div>
             <label for="donateAddEmail" style={{ display: "block" }}>
-              Email
+              Email(Optional)
             </label>
-            <textarea ref="addEmail" id="donateAddEmail" type="text"></textarea>
+            <input
+              ref="addEmail"
+              id="donateAddEmail"
+              type="text"
+              placeholder="Your Email"
+            />
           </div>
           <p ref="tips" className="tips">
             Submit Successfully
@@ -86,8 +100,11 @@ export default class DonateForm extends React.Component {
           <p ref="tipsUnAge" className="tips">
             Please input a valid amount number.
           </p>
+          <p ref="tipsNoBS" className="tips">
+            Please select a bus stop firstly.
+          </p>
           <div>
-            <button>Submit</button>
+            <button onClick={this.handlerAddClick.bind(this)}>Submit</button>
           </div>
         </form>
       </div>

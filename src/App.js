@@ -13,14 +13,14 @@ export default class App extends React.Component {
     super();
     this.state = {
       busstop: new Busstop(),
-      displayBStopId: 0,
+      displayBStopId: "0",
       bsDonationList: new Donation(),
     };
   }
 
   addDonationItem(item) {
     this.setState({
-      donatelist: this.state.donatelist.addDonationItem(item),
+      bsDonationList: this.state.bsDonationList.addDonationItem(item),
     });
   }
 
@@ -50,7 +50,10 @@ export default class App extends React.Component {
           items={this.state.bsDonationList.donations}
           currentBSid={this.state.displayBStopId}
         />
-        <DonateForm currentBSid={this.state.displayBStopId} />
+        <DonateForm
+          currentBSid={this.state.displayBStopId}
+          addDonations={this.addDonationItem.bind(this)}
+        />
       </div>
     );
   }
