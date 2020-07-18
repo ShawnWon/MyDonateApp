@@ -44,7 +44,7 @@ export default class BusstopPanel extends React.Component {
                 <h6>Busstop Name</h6>
               </div>
             </th>
-            <th>
+            <th colSpan="2">
               <div class="w3-card w3-lime">
                 <h6>Area</h6>
               </div>

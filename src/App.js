@@ -1,13 +1,15 @@
 import React from "react";
-import BusstopHeader from "./BusstopHeader.js";
-import BusstopItem from "./BusstopItem.js";
-import BusstopPanel from "./BusstopPanel";
-import DonateForm from "./DonateForm.js";
-import DonateDetail from "./DonateDetail.js";
+import BusstopHeader from "./Component/BusstopHeader.js";
+import BusstopItem from "./Component/BusstopItem.js";
+import BusstopPanel from "./Component/BusstopPanel";
+import DonateForm from "./Component/DonateForm.js";
+import DonateDetail from "./Component/DonateDetail.js";
 import "./App.css";
 
-import Busstop from "./Busstop.js";
-import Donation from "./Donation.js";
+import Busstop from "./Component/Busstop.js";
+import Donation from "./Component/Donation.js";
+
+import DBservices from "./DB/DBservices.js";
 
 export default class App extends React.Component {
   constructor() {

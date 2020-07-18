@@ -13,6 +13,8 @@ export default class DonateDetail extends React.Component {
 
     if (this.props.currentBSid != 0) {
       detailview.style.display = "block";
+    } else {
+      if (detailview != null) detailview.style.display = "none";
     }
 
     if (this.props.items.length == 0) {
@@ -40,7 +42,7 @@ export default class DonateDetail extends React.Component {
     }
 
     return (
-      <div ref="donateDetailView" className="overLay">
+      <div ref="donateDetailView" className="donateForm">
         <h3 style={{ "text-align": "center" }}>Busstop Status</h3>
         <hr />
         <div class="w3-third">

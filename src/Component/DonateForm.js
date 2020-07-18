@@ -1,8 +1,39 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PaymentForm from "./PaymentForm";
 export default class DonateForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDialog: false,
+      iteminfo: null,
+    };
+  }
+
+  proceedDonate(action) {
+    var item = this.state.iteminfo;
+    let addForm = ReactDOM.findDOMNode(this.refs.addForm);
+    if (action == "ok") {
+      this.props.addDonations(item);
+      //This is for successfully donation
+      let tips = ReactDOM.findDOMNode(this.refs.tips);
+      tips.style.display = "block";
+      setTimeout(function () {
+        tips.style.display = "none";
+      }, 1000);
+    } else {
+      item.donateamount = 0;
+      this.props.addDonations(item);
+    }
+    addForm.reset();
+    this.state.showDialog = false;
+  }
+
   handlerAddClick(evt) {
     evt.preventDefault();
+
+    this.setState({ showDialog: !this.state.showDialog });
+
     let item = {};
     let addForm = ReactDOM.findDOMNode(this.refs.addForm);
     item.busstopid = this.props.currentBSid;
@@ -42,25 +73,20 @@ export default class DonateForm extends React.Component {
       item.donateamount = parseInt(item.donateamount);
     }
 
-    this.props.addDonations(item);
-    addForm.reset();
-
-    //This is for successfully submit
-    let tips = ReactDOM.findDOMNode(this.refs.tips);
-    tips.style.display = "block";
-    setTimeout(function () {
-      tips.style.display = "none";
-    }, 1000);
+    this.state.showDialog = true;
+    this.state.iteminfo = item;
   }
 
   render() {
     let formview = ReactDOM.findDOMNode(this.refs.donateFormView);
     if (this.props.currentBSid != 0) {
       formview.style.display = "block";
+    } else {
+      if (formview != null) formview.style.display = "none";
     }
 
     return (
-      <div ref="donateFormView" className="overLay">
+      <div ref="donateFormView" className="donateForm">
         <div style={{ "text-align": "center" }} class="w3-cell-middle">
           <h3>Add Donation</h3>
           <hr />
@@ -122,6 +148,9 @@ export default class DonateForm extends React.Component {
               >
                 Submit
               </button>
+              {this.state.showDialog ? (
+                <PaymentForm callback={this.proceedDonate.bind(this)} />
+              ) : null}
             </div>
           </form>
         </div>

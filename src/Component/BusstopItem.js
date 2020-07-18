@@ -19,7 +19,7 @@ export default class BusstopItem extends React.Component {
               id={this.props.item.info.busstopid}
               ref="detailButton"
               onClick={this.detailClick.bind(this)}
-              class="w3-btn"
+              class="w3-btn w3-green"
             >
               Go
             </button>
