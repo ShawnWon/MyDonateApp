@@ -1,5 +1,3 @@
-import DBservices from "../DB/DBservices.js";
-
 class busstopItem {
   constructor(item) {
     this.info = {};
@@ -14,18 +12,24 @@ busstopItem.key = 0;
 
 export default class Busstop {
   constructor() {
-    this.allBusstop = DBservices.getAllBusstops().map(
-      (bs) => new busstopItem(bs)
-    );
-
     this.busstops = [];
     this.word = "";
     this.area = "";
+
+    fetch("/busstops")
+      .then((response) => response.json())
+      .then((data) => data.info)
+      .then((data) => {
+        this.state = { allBusstop: data.map((bs) => new busstopItem(bs)) };
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   searchBusstop(word) {
     this.word = word;
-    this.busstops = this.allBusstop;
+    this.busstops = this.state.allBusstop;
 
     this.busstops = this.busstops.filter((item) => {
       return (

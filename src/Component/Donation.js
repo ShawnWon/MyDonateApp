@@ -1,5 +1,3 @@
-import DBservices from "../DB/DBservices.js";
-
 class donationItem {
   constructor(item) {
     this.info = {};
@@ -14,20 +12,49 @@ donationItem.key = 0;
 
 export default class Donation {
   constructor() {
-    this.allDonations = DBservices.getAllDonations().map(
-      (dn) => new donationItem(dn)
-    );
+    //this.allDonations = DBservices.getAllDonations().map(
+    //(dn) => new donationItem(dn)
+    //);
 
     this.donations = [];
     this.bstopid = "";
+
+    fetch("/donations")
+      .then((response) => response.json())
+      .then((data) => data.info)
+      .then((data) => {
+        this.state = { allDonations: data.map((dn) => new donationItem(dn)) };
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   addDonationItem(item) {
     if (item.donateamount != 0) {
       let newItem = new donationItem(item);
-      this.allDonations.push(newItem);
+
+      //Talk to api to update changes
+      fetch("/donations", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify(newItem),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          if (response.info === "Successfully Added.") {
+            this.state.allDonations.push(newItem);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    this.donations = this.allDonations.filter((it) => {
+    this.donations = this.state.allDonations.filter((it) => {
       return it.info.busstopid == item.busstopid;
     });
 
@@ -36,7 +63,7 @@ export default class Donation {
 
   refreshDonations(bstopid) {
     this.bstopid = bstopid;
-    this.donations = this.allDonations;
+    this.donations = this.state.allDonations;
 
     this.donations = this.donations.filter((item) => {
       return item.info.busstopid == bstopid;

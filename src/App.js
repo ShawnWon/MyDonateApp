@@ -9,8 +9,6 @@ import "./App.css";
 import Busstop from "./Component/Busstop.js";
 import Donation from "./Component/Donation.js";
 
-import DBservices from "./DB/DBservices.js";
-
 export default class App extends React.Component {
   constructor() {
     super();

@@ -17,7 +17,7 @@ export default class BusstopHeader extends React.Component {
           onChange={this.handlerSearch.bind(this)}
           type="text"
           placeholder="Search a bus stop..."
-          class="w3-input"
+          className="w3-input"
         />
       </div>
     );

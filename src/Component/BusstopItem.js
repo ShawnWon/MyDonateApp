@@ -10,11 +10,11 @@ export default class BusstopItem extends React.Component {
   render() {
     return (
       <tr style={{ cursor: "pointer" }}>
-        <td className="itemTd">{this.props.item.info.busstopid}</td>
-        <td className="itemTd">{this.props.item.info.busstopname}</td>
-        <td className="itemTd">{this.props.item.info.area}</td>
-        <td className="itemTd">
-          <a className="itemBtn">
+        <td>{this.props.item.info.busstopid}</td>
+        <td>{this.props.item.info.busstopname}</td>
+        <td>{this.props.item.info.area}</td>
+        <td>
+          <a>
             <button
               id={this.props.item.info.busstopid}
               ref="detailButton"
