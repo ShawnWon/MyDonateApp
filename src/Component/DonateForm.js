@@ -32,8 +32,6 @@ export default class DonateForm extends React.Component {
   handlerAddClick(evt) {
     evt.preventDefault();
 
-    this.setState({ showDialog: !this.state.showDialog });
-
     let item = {};
     let addForm = ReactDOM.findDOMNode(this.refs.addForm);
     item.busstopid = this.props.currentBSid;
@@ -52,7 +50,7 @@ export default class DonateForm extends React.Component {
     /*
      *validate form
      */
-    if (item.donatername == "" || item.age == "") {
+    if (item.donatername == "") {
       let tips = ReactDOM.findDOMNode(this.refs.tipsUnDone);
       tips.style.display = "block";
       setTimeout(function () {
@@ -62,7 +60,7 @@ export default class DonateForm extends React.Component {
     }
     //validate number input
     let numReg = /^\d+$/;
-    if (!numReg.test(item.donateamount) || parseInt(item.age) > 1000) {
+    if (!numReg.test(item.donateamount)) {
       let tips = ReactDOM.findDOMNode(this.refs.tipsUnAge);
       tips.style.display = "block";
       setTimeout(function () {
@@ -73,8 +71,8 @@ export default class DonateForm extends React.Component {
       item.donateamount = parseInt(item.donateamount);
     }
 
-    this.state.showDialog = true;
-    this.state.iteminfo = item;
+    this.setState({ showDialog: true });
+    this.setState({ iteminfo: item });
   }
 
   render() {
