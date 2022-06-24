@@ -4,6 +4,7 @@ import BusstopItem from "./Component/BusstopItem.js";
 import BusstopPanel from "./Component/BusstopPanel";
 import DonateForm from "./Component/DonateForm.js";
 import DonateDetail from "./Component/DonateDetail.js";
+import ToggleTheme from "./Component/ToggleTheme";
 import "./App.css";
 
 import Busstop from "./Component/Busstop.js";
@@ -45,7 +46,8 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div class="w3-display-topmiddle">
+      <div className="w3-display-topmiddle">
+        <ToggleTheme />
         <div>
           <BusstopHeader searchBusstop={this.searchBusstop.bind(this)} />
           <BusstopPanel
