@@ -1,25 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom";
-export default class BusstopHeader extends React.Component {
-  handlerSearch() {
-    let bar = ReactDOM.findDOMNode(this.refs.searchBar);
-    let value = bar.value;
-    this.props.searchBusstop(value);
+import React, { useRef } from "react";
+function BusstopHeader(props) {
+  const searchBar = useRef(null);
+  const handlerSearch = () => {
+    //let bar = ReactDOM.findDOMNode(searchBar);
+    let value = searchBar.current.value;
+    props.searchBusstop(value);
   }
 
-  render() {
     return (
       <div>
         <h2 style={{ textAlign: "center" }}>Donation System</h2>
 
         <input
-          ref="searchBar"
-          onChange={this.handlerSearch.bind(this)}
+          ref={searchBar}
+          onChange={handlerSearch.bind(this)}
           type="text"
           placeholder="Search a bus stop..."
           className="w3-input"
         />
       </div>
     );
-  }
 }
+
+export default BusstopHeader;

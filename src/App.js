@@ -1,6 +1,5 @@
 import React from "react";
 import BusstopHeader from "./Component/BusstopHeader.js";
-import BusstopItem from "./Component/BusstopItem.js";
 import BusstopPanel from "./Component/BusstopPanel";
 import DonateForm from "./Component/DonateForm.js";
 import DonateDetail from "./Component/DonateDetail.js";
@@ -37,7 +36,7 @@ export default class App extends React.Component {
     this.setState({
       busstop: this.state.busstop.searchBusstop(word),
     });
-    if (word == "") {
+    if (word === "") {
       this.setState({
         displayBStopId: "0",
       });

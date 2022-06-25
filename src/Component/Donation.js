@@ -31,7 +31,7 @@ export default class Donation {
   }
 
   addDonationItem(item) {
-    if (item.donateamount != 0) {
+    if (item.donateamount !== 0) {
       let newItem = new donationItem(item);
 
       //Talk to api to update changes
@@ -55,7 +55,7 @@ export default class Donation {
         });
     }
     this.donations = this.state.allDonations.filter((it) => {
-      return it.info.busstopid == item.busstopid;
+      return it.info.busstopid === item.busstopid;
     });
 
     return this;
@@ -66,7 +66,7 @@ export default class Donation {
     this.donations = this.state.allDonations;
 
     this.donations = this.donations.filter((item) => {
-      return item.info.busstopid == bstopid;
+      return item.info.busstopid === parseInt(bstopid);
     });
     return this;
   }

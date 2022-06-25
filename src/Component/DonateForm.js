@@ -1,46 +1,54 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, {useState, useRef} from "react";
 import PaymentForm from "./PaymentForm";
-export default class DonateForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showDialog: false,
-      iteminfo: null,
-    };
-  }
+import {useSelector} from "react-redux";
+function DonateForm(props) {
 
-  proceedDonate(action) {
-    var item = this.state.iteminfo;
-    let addForm = ReactDOM.findDOMNode(this.refs.addForm);
-    if (action == "ok") {
-      this.props.addDonations(item);
+  const [showDialog, setShowDialog] = useState(false);
+  const [itemInfo, setItemInfo] = useState(null);
+  const addFormRef = useRef(null);
+  const tipsRef = useRef(null);
+  const tipsNoBS = useRef(null);
+  const tipsUnDone = useRef(null);
+  const tipsUnAge = useRef(null);
+  const addName = useRef(null);
+  const addAmount = useRef(null);
+  const addEmail = useRef(null);
+  const donateFormView = useRef(null);
+
+  const theme = useSelector((state) => state.theme.value);
+  let addForm = addFormRef.current;
+  let tips = tipsRef.current;
+
+  const proceedDonate = (action)=> {
+    var item = itemInfo;
+    if (action === "ok") {
+      props.addDonations(item);
       //This is for successfully donation
-      let tips = ReactDOM.findDOMNode(this.refs.tips);
+
       tips.style.display = "block";
       setTimeout(function () {
         tips.style.display = "none";
       }, 1000);
     } else {
       item.donateamount = 0;
-      this.props.addDonations(item);
+      props.addDonations(item);
     }
     addForm.reset();
-    this.state.showDialog = false;
+    setShowDialog(false);
   }
 
-  handlerAddClick(evt) {
+  const handlerAddClick= (evt) => {
     evt.preventDefault();
 
     let item = {};
-    let addForm = ReactDOM.findDOMNode(this.refs.addForm);
-    item.busstopid = this.props.currentBSid;
+    
+    item.busstopid = props.currentBSid;
     item.donatername = addForm.querySelector("#donateAddName").value.trim();
     item.donateamount = addForm.querySelector("#donateAddAmount").value.trim();
     item.donateremail = addForm.querySelector("#donateAddEmail").value.trim();
 
-    if (item.busstopid == "0") {
-      let tips = ReactDOM.findDOMNode(this.refs.tipsNoBS);
+    if (item.busstopid === "0") {
+      let tips = tipsNoBS.current;
       tips.style.display = "block";
       setTimeout(function () {
         tips.style.display = "none";
@@ -50,8 +58,8 @@ export default class DonateForm extends React.Component {
     /*
      *validate form
      */
-    if (item.donatername == "") {
-      let tips = ReactDOM.findDOMNode(this.refs.tipsUnDone);
+    if (item.donatername === "") {
+      let tips = tipsUnDone.current;
       tips.style.display = "block";
       setTimeout(function () {
         tips.style.display = "none";
@@ -61,7 +69,7 @@ export default class DonateForm extends React.Component {
     //validate number input
     let numReg = /^\d+$/;
     if (!numReg.test(item.donateamount)) {
-      let tips = ReactDOM.findDOMNode(this.refs.tipsUnAge);
+      let tips = tipsUnAge.current;
       tips.style.display = "block";
       setTimeout(function () {
         tips.style.display = "none";
@@ -70,89 +78,88 @@ export default class DonateForm extends React.Component {
     } else {
       item.donateamount = parseInt(item.donateamount);
     }
-
-    this.setState({ showDialog: true });
-    this.setState({ iteminfo: item });
+    setShowDialog(true);
+    setItemInfo(item);
   }
 
-  render() {
-    let formview = ReactDOM.findDOMNode(this.refs.donateFormView);
-    if (this.props.currentBSid != 0) {
+ 
+    let formview = donateFormView.current;
+    if (props.currentBSid !== "0") {
       formview.style.display = "block";
     } else {
       if (formview != null) formview.style.display = "none";
     }
 
     return (
-      <div ref="donateFormView" className="donateForm">
-        <div style={{ "text-align": "center" }} class="w3-cell-middle">
+      <div ref={donateFormView} className="donateForm">
+        <div style={{ "textAlign": "center" }} className="w3-cell-middle">
           <h3>Add Donation</h3>
           <hr />
-          <form ref="addForm" className="addForm">
-            <div class="w3-card w3-green">
-              <label for="donateAddName" style={{ display: "block" }}>
+          <form ref={addFormRef} className="addForm">
+            <div className={`w3-card ${theme.primaryColor}`}>
+              <label htmlFor="donateAddName" style={{ display: "block" }}>
                 Name
               </label>
               <input
-                ref="addName"
+                ref={addName}
                 id="donateAddName"
                 type="text"
                 placeholder="Your Name"
-                class="w3-input"
+                className="w3-input"
               />
             </div>
-            <div class="w3-card w3-light-green">
-              <label for="donateAddAmount" style={{ display: "block" }}>
+            <div className={`w3-card ${theme.secondaryColor}`}>
+              <label htmlFor="donateAddAmount" style={{ display: "block" }}>
                 Amount
               </label>
               <input
-                ref="addAmount"
+                ref={addAmount}
                 id="donateAddAmount"
                 type="text"
                 placeholder="Input Your donate amount(0-1000)"
-                class="w3-input"
+                className="w3-input"
               />
             </div>
 
-            <div class="w3-card w3-lime">
-              <label for="donateAddEmail" style={{ display: "block" }}>
+            <div className={`w3-card ${theme.tertiaryColor}`}>
+              <label htmlFor="donateAddEmail" style={{ display: "block" }}>
                 Email(Optional)
               </label>
               <input
-                ref="addEmail"
+                ref={addEmail}
                 id="donateAddEmail"
                 type="text"
                 placeholder="Your Email"
-                class="w3-input"
+                className="w3-input"
               />
             </div>
-            <p ref="tips" className="tips">
+            <p ref={tips} className="tips">
               Submit Successfully
             </p>
-            <p ref="tipsUnDone" className="tips">
+            <p ref={tipsUnDone} className="tips">
               Please input a name.
             </p>
-            <p ref="tipsUnAge" className="tips">
+            <p ref={tipsUnAge} className="tips">
               Please input a valid amount number.
             </p>
-            <p ref="tipsNoBS" className="tips">
+            <p ref={tipsNoBS} className="tips">
               Please select a bus stop firstly.
             </p>
             <div>
               <br />
               <button
-                class="w3-btn w3-green"
-                onClick={this.handlerAddClick.bind(this)}
+                className={`w3-card ${theme.primaryColor}`}
+                onClick={handlerAddClick.bind(this)}
               >
                 Submit
               </button>
-              {this.state.showDialog ? (
-                <PaymentForm callback={this.proceedDonate.bind(this)} />
+              {showDialog ? (
+                <PaymentForm callback={proceedDonate.bind(this)} />
               ) : null}
             </div>
           </form>
         </div>
       </div>
     );
-  }
 }
+export default DonateForm;

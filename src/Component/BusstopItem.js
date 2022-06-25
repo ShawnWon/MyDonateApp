@@ -1,25 +1,28 @@
-import React from "react";
-import ReactDOM from "react-dom";
-export default class BusstopItem extends React.Component {
-  detailClick() {
-    let bar = ReactDOM.findDOMNode(this.refs.detailButton);
+import React, {useRef} from "react";
+import {useSelector} from "react-redux";
+function BusstopItem(props) {
+  const detailButton = useRef(null);
+  const detailClick= ()=> {
+    let bar = detailButton.current;
     let value = bar.id;
-    this.props.refreshDonations(value);
+    console.log(value);
+    props.refreshDonations(value);
   }
 
-  render() {
+  const theme = useSelector((state) => state.theme.value);
+  
     return (
       <tr style={{ cursor: "pointer" }}>
-        <td>{this.props.item.info.busstopid}</td>
-        <td>{this.props.item.info.busstopname}</td>
-        <td>{this.props.item.info.area}</td>
+        <td>{props.item.info.busstopid}</td>
+        <td>{props.item.info.busstopname}</td>
+        <td>{props.item.info.area}</td>
         <td>
-          <a>
+          <a href="/#">
             <button
-              id={this.props.item.info.busstopid}
-              ref="detailButton"
-              onClick={this.detailClick.bind(this)}
-              class="w3-btn w3-green"
+              id={props.item.info.busstopid}
+              ref={detailButton}
+              onClick={detailClick.bind(this)}
+              className={`w3-btn ${theme.primaryColor}`}
             >
               Go
             </button>
@@ -27,5 +30,7 @@ export default class BusstopItem extends React.Component {
         </td>
       </tr>
     );
-  }
+  
 }
+
+export default BusstopItem;

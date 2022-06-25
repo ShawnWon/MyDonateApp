@@ -1,7 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import BusstopItem from "./BusstopItem.js";
-import Donation from "./Donation.js";
 
 import {useSelector} from "react-redux";
 
@@ -12,18 +10,15 @@ function BusstopPanel(props) {
   }
 
       const theme = useSelector((state) => state.theme.value);
-    console.log(theme.primaryColor);
-  
-
 
     let itemslist = [];
 
 
-    if (props.items.length == 0) {
+    if (props.items.length === 0) {
       itemslist.push(
-        <tr>
+        <tr key = {0}>
           <th colSpan="3" className="tempEmpty">
-            No busstop available.
+            No busstop found, input some other keyword.
           </th>
         </tr>
       );
@@ -43,21 +38,23 @@ function BusstopPanel(props) {
       <div className="w3-container">
         <table className="w3-table w3-striped">
           <thead>
-            <th>
+            <tr>
+              <td>
               <div className={`w3-card ${theme.primaryColor}`} >
                 <h6>Bus stop Id</h6>
               </div>
-            </th>
-            <th>
+              </td>
+              <td>
               <div className={`w3-card ${theme.secondaryColor}`}>
                 <h6>Busstop Name</h6>
               </div>
-            </th>
-            <th colSpan="2">
+              </td>
+              <td colSpan="2">
               <div className={`w3-card ${theme.tertiaryColor}`}>
                 <h6>Area</h6>
               </div>
-            </th>
+              </td>
+            </tr>
           </thead>
           <tbody>{itemslist}</tbody>
         </table>

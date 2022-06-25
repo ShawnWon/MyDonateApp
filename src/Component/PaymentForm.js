@@ -1,16 +1,14 @@
 import React from "react";
-export default class PaymentForm extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+import {useSelector} from "react-redux";
+function PaymentForm(props) {
 
-  render() {
+  const theme = useSelector((state) => state.theme.value);
     return (
-      <div className="paymentForm" class="w3-card">
-        <div class="w3-green">
+      <div className="paymentForm w3-card">
+        <div className={`${theme.primaryColor}`}>
           <h4 style={{ textAlign: "center" }}>Please input card number:</h4>
         </div>
-        <table class="w3-table w3-striped">
+        <table className="w3-table w3-striped">
           <tbody>
             <tr>
               <th>Holder Name</th>
@@ -33,19 +31,21 @@ export default class PaymentForm extends React.Component {
           </tbody>
         </table>
         <button
-          class="w3-btn w3-light-green"
+          className={`w3-btn ${theme.secondaryColor}`}
           margin-right="50px"
           onClick={() => this.props.callback("ok")}
         >
           OK
         </button>
         <button
-          class="w3-btn w3-lime w3-margin-left"
+          className={`w3-btn ${theme.tertiaryColor} w3-margin-left`}
           onClick={() => this.props.callback("cancel")}
         >
           Cancel
         </button>
       </div>
     );
-  }
+  
 }
+
+export default PaymentForm;
